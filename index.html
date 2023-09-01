@@ -1,7 +1,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Untitled</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>prediction</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7438,29 +7438,30 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Get data from csv file; more advanced version should include option to interface with a database using odbc or a MySQL connector (ie: pymssql)</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"US Monthly Total Primary Energy Consumption.csv"</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">'%Y%m'</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'coerce'</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Total Primary Energy Consumption (Quadrillion BTU)'</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b8f5b5db-7d10-425d-998f-3fb3c1161e5d">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a1c087d0-fe8e-4a8c-bc13-5125599034aa">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">chart_studio.tools</span> <span class="k">as</span> <span class="nn">cstools</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Create plot for input data; decompose input data into trend, seasonal, and residual components and plot the components</span>
+<span class="kn">import</span> <span class="nn">chart_studio.tools</span> <span class="k">as</span> <span class="nn">cstools</span>
 <span class="kn">import</span> <span class="nn">chart_studio.plotly</span> <span class="k">as</span> <span class="nn">ply</span>
 <span class="kn">import</span> <span class="nn">cufflinks</span> <span class="k">as</span> <span class="nn">cf</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -7468,6 +7469,7 @@ a.anchor-link {
 <span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
 <span class="n">cstools</span><span class="o">.</span><span class="n">set_credentials_file</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s1">'whuynh'</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s1">'F4a1vCyqrUUxMorao8Qf'</span><span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">'multiplicative'</span><span class="p">)</span>
+<span class="c1">#Uncomment below methods to replot decomposed data. Workaround due to plot_mpl no longer being supported offline; future update should include toggle.</span>
 <span class="c1">#fig = result.plot()</span>
 <span class="c1">#plot_mpl(fig)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"US Monthly Total Primary Energy Consumption, Jan 1973-April 2023"</span><span class="p">)</span>
@@ -7481,7 +7483,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[30]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <iframe allowfullscreen="" frameborder="0" height="525px" src="https://plotly.com/~whuynh/10.embed" width="100%"></iframe>
 </div>
@@ -7493,11 +7495,12 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [37]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">width</span><span class="o">=</span><span class="s">"900"</span> <span class="na">height</span><span class="o">=</span><span class="s">"500"</span> <span class="na">frameborder</span><span class="o">=</span><span class="s">"0"</span> <span class="na">scrolling</span><span class="o">=</span><span class="s">"no"</span> <span class="na">src</span><span class="o">=</span><span class="s">"//plotly.com/~whuynh/29.embed"</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Get plot for decomposed data from plotly's online platform.</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="s2">"https://plotly.com/~whuynh/29.embed"</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7507,10 +7510,10 @@ a.anchor-link {
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<iframe frameborder="0" height="500" scrolling="no" src="//plotly.com/~whuynh/29.embed" width="900"></iframe>
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<iframe allowfullscreen="" frameborder="0" height="800" src="https://plotly.com/~whuynh/29.embed" width="900"></iframe>
 </div>
 </div>
 </div>
@@ -7520,10 +7523,11 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [33]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pmdarima</span> <span class="kn">import</span> <span class="n">auto_arima</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Find parameters p, q, d and P, Q, and D for ARIMA model</span>
+<span class="kn">from</span> <span class="nn">pmdarima</span> <span class="kn">import</span> <span class="n">auto_arima</span>
 <span class="n">stepwise_model</span> <span class="o">=</span> <span class="n">auto_arima</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">start_p</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">start_q</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                            <span class="n">max_p</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">max_q</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
                            <span class="n">start_P</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">seasonal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -7545,47 +7549,65 @@ a.anchor-link {
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Performing stepwise search to minimize aic
- ARIMA(1,1,1)(0,1,1)[12]             : AIC=-316.704, Time=0.76 sec
+ ARIMA(1,1,1)(0,1,1)[12]             : AIC=-316.704, Time=0.73 sec
  ARIMA(0,1,0)(0,1,0)[12]             : AIC=53.357, Time=0.04 sec
- ARIMA(1,1,0)(1,1,0)[12]             : AIC=-78.173, Time=0.17 sec
+ ARIMA(1,1,0)(1,1,0)[12]             : AIC=-78.173, Time=0.16 sec
  ARIMA(0,1,1)(0,1,1)[12]             : AIC=-296.050, Time=0.47 sec
  ARIMA(1,1,1)(0,1,0)[12]             : AIC=-57.777, Time=0.16 sec
- ARIMA(1,1,1)(1,1,1)[12]             : AIC=-317.586, Time=1.07 sec
- ARIMA(1,1,1)(1,1,0)[12]             : AIC=-139.602, Time=0.34 sec
- ARIMA(1,1,1)(2,1,1)[12]             : AIC=-335.792, Time=2.52 sec
- ARIMA(1,1,1)(2,1,0)[12]             : AIC=-222.013, Time=0.62 sec
- ARIMA(1,1,1)(2,1,2)[12]             : AIC=-340.072, Time=4.49 sec
- ARIMA(1,1,1)(1,1,2)[12]             : AIC=-322.507, Time=4.18 sec
- ARIMA(0,1,1)(2,1,2)[12]             : AIC=-322.777, Time=3.48 sec
- ARIMA(1,1,0)(2,1,2)[12]             : AIC=-288.017, Time=2.97 sec
- ARIMA(2,1,1)(2,1,2)[12]             : AIC=-338.252, Time=4.59 sec
- ARIMA(1,1,2)(2,1,2)[12]             : AIC=-338.596, Time=4.52 sec
- ARIMA(0,1,0)(2,1,2)[12]             : AIC=-239.236, Time=1.75 sec
- ARIMA(0,1,2)(2,1,2)[12]             : AIC=-338.642, Time=3.26 sec
- ARIMA(2,1,0)(2,1,2)[12]             : AIC=-322.797, Time=3.02 sec
- ARIMA(2,1,2)(2,1,2)[12]             : AIC=-336.801, Time=5.23 sec
- ARIMA(1,1,1)(2,1,2)[12] intercept   : AIC=-327.098, Time=6.72 sec
+ ARIMA(1,1,1)(1,1,1)[12]             : AIC=-317.586, Time=1.05 sec
+ ARIMA(1,1,1)(1,1,0)[12]             : AIC=-139.602, Time=0.32 sec
+ ARIMA(1,1,1)(2,1,1)[12]             : AIC=-335.792, Time=2.43 sec
+ ARIMA(1,1,1)(2,1,0)[12]             : AIC=-222.013, Time=0.58 sec
+ ARIMA(1,1,1)(2,1,2)[12]             : AIC=-340.072, Time=4.35 sec
+ ARIMA(1,1,1)(1,1,2)[12]             : AIC=-322.507, Time=4.03 sec
+ ARIMA(0,1,1)(2,1,2)[12]             : AIC=-322.777, Time=3.32 sec
+ ARIMA(1,1,0)(2,1,2)[12]             : AIC=-288.017, Time=3.00 sec
+ ARIMA(2,1,1)(2,1,2)[12]             : AIC=-338.252, Time=4.49 sec
+ ARIMA(1,1,2)(2,1,2)[12]             : AIC=-338.596, Time=4.57 sec
+ ARIMA(0,1,0)(2,1,2)[12]             : AIC=-239.236, Time=1.70 sec
+ ARIMA(0,1,2)(2,1,2)[12]             : AIC=-338.642, Time=3.32 sec
+ ARIMA(2,1,0)(2,1,2)[12]             : AIC=-322.797, Time=3.18 sec
+ ARIMA(2,1,2)(2,1,2)[12]             : AIC=-336.801, Time=4.95 sec
+ ARIMA(1,1,1)(2,1,2)[12] intercept   : AIC=-327.098, Time=6.48 sec
 
 Best model:  ARIMA(1,1,1)(2,1,2)[12]          
-Total fit time: 50.383 seconds
+Total fit time: 49.345 seconds
 -340.0722404385085
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=06d27b30-7d9d-4d17-8bc7-94c471eb9d76">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b9b335b1-c45d-4ee6-a01b-bd56edcaa64c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [97]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">train</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'1973-01-01'</span><span class="p">:</span><span class="s1">'2008-12-01'</span><span class="p">]</span>
-<span class="n">test</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'2009-01-01'</span><span class="p">:</span><span class="s1">'2023-05-01'</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-<span class="n">stepwise_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Create interactive slider to get date ranges for training data and test data from user</span>
+<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="n">min_date</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">max_date</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">min_date</span><span class="p">,</span> <span class="n">max_date</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">'MS'</span><span class="p">)</span>
+<span class="n">train_options</span> <span class="o">=</span> <span class="p">[</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span> <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">]</span>
+<span class="n">train_index</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">selection_range_slider</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">SelectionRangeSlider</span><span class="p">(</span>
+    <span class="n">options</span><span class="o">=</span><span class="n">train_options</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="n">train_index</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">'Train Dates'</span><span class="p">,</span>
+    <span class="n">orientation</span><span class="o">=</span><span class="s1">'horizontal'</span><span class="p">,</span>
+    <span class="n">layout</span><span class="o">=</span><span class="p">{</span><span class="s1">'width'</span><span class="p">:</span> <span class="s1">'500px'</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_train_dates</span><span class="p">(</span><span class="nb">range</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">range</span>
+<span class="n">train_dates</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span>
+    <span class="n">get_train_dates</span><span class="p">,</span>
+    <span class="nb">range</span><span class="o">=</span><span class="n">selection_range_slider</span>
+<span class="p">);</span>
+<span class="n">display</span><span class="p">(</span><span class="n">train_dates</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -7598,28 +7620,36 @@ Total fit time: 50.383 seconds
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>            Total Primary Energy Consumption (Quadrillion BTU)
-YYYYMM                                                        
-2009-01-01                                           9.126286 
-2009-02-01                                           7.866518 
-2009-03-01                                           8.045425 
-2009-04-01                                           7.334307 
-2009-05-01                                           7.280130 
-...                                                       ... 
-2023-01-01                                           8.896747 
-2023-02-01                                           8.018247 
-2023-03-01                                           8.617804 
-2023-04-01                                           7.686575 
-2023-05-01                                           7.872248 
-
-[173 rows x 1 columns]
-</pre>
+<pre>interactive(children=(SelectionRangeSlider(description='Train Dates', index=(0, 604), layout=Layout(width='500…</pre>
 </div>
 </div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a90f4021-f420-4e80-a96b-bab6a945a378">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Train ARIMA model with given training data and test data ranges</span>
+<span class="n">train_range</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_dates</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span> <span class="n">train_dates</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="n">test_range</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_dates</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">max_date</span><span class="p">]</span>
+<span class="n">stepwise_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_range</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[97]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<style>#sk-container-id-5 {color: black;}#sk-container-id-5 pre{padding: 0;}#sk-container-id-5 div.sk-toggleable {background-color: white;}#sk-container-id-5 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-5 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-5 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-5 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-5 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-5 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-5 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-5 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-5 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-5 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-5 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-5 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-5 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-5 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-5 div.sk-item {position: relative;z-index: 1;}#sk-container-id-5 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-5 div.sk-item::before, #sk-container-id-5 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-5 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-5 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-5 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-5 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-5 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-5 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-5 div.sk-label-container {text-align: center;}#sk-container-id-5 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-5 div.sk-text-repr-fallback {display: none;}</style><div class="sk-top-container" id="sk-container-id-5"><div class="sk-text-repr-fallback"><pre> ARIMA(1,1,1)(2,1,2)[12]          </pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br/>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input checked="" class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"/><label class="sk-toggleable__label sk-toggleable__label-arrow" for="sk-estimator-id-5">ARIMA</label><div class="sk-toggleable__content"><pre> ARIMA(1,1,1)(2,1,2)[12]          </pre></div></div></div></div></div>
+<style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div class="sk-top-container" id="sk-container-id-1"><div class="sk-text-repr-fallback"><pre> ARIMA(1,1,1)(2,1,2)[12]          </pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br/>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input checked="" class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox"/><label class="sk-toggleable__label sk-toggleable__label-arrow" for="sk-estimator-id-1">ARIMA</label><div class="sk-toggleable__content"><pre> ARIMA(1,1,1)(2,1,2)[12]          </pre></div></div></div></div></div>
 </div>
 </div>
 </div>
@@ -7629,10 +7659,12 @@ YYYYMM
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [93]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">future_forecast</span> <span class="o">=</span> <span class="n">stepwise_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">n_periods</span><span class="o">=</span><span class="mi">173</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Create a forecast either to predict future values or to evaluate fit versus test data</span>
+<span class="n">periods</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s1">'Input number of prediction periods (months):'</span><span class="p">))</span>
+<span class="n">future_forecast</span> <span class="o">=</span> <span class="n">stepwise_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">n_periods</span><span class="o">=</span><span class="n">periods</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">future_forecast</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -7645,19 +7677,22 @@ YYYYMM
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>2009-01-01    9.077321
-2009-02-01    8.296318
-2009-03-01    8.426350
-2009-04-01    7.668347
-2009-05-01    7.784757
+<pre>2023-06-01    8.015631
+2023-07-01    8.537477
+2023-08-01    8.497074
+2023-09-01    7.776740
+2023-10-01    7.865924
                 ...   
-2023-01-01    8.873734
-2023-02-01    8.143134
-2023-03-01    8.232374
-2023-04-01    7.468739
-2023-05-01    7.597226
-Freq: MS, Length: 173, dtype: float64
+2033-01-01    9.354668
+2033-02-01    8.387833
+2033-03-01    8.570388
+2033-04-01    7.661975
+2033-05-01    7.878981
+Freq: MS, Length: 120, dtype: float64
 </pre>
 </div>
 </div>
@@ -7668,11 +7703,12 @@ Freq: MS, Length: 173, dtype: float64
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [99]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">future_forecast</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">future_forecast</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Prediction'</span><span class="p">])</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">test</span><span class="p">,</span><span class="n">future_forecast</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Compare model prediction versus test data, will not be useful if predicting in the future</span>
+<span class="n">future_forecast</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">future_forecast</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">'Predicted Primary Energy Consumption'</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">test_range</span><span class="p">,</span><span class="n">future_forecast</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -7683,9 +7719,9 @@ Freq: MS, Length: 173, dtype: float64
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[99]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[16]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<iframe allowfullscreen="" frameborder="0" height="525px" src="https://plotly.com/~whuynh/75.embed" width="100%"></iframe>
+<iframe allowfullscreen="" frameborder="0" height="525px" src="https://plotly.com/~whuynh/126.embed" width="100%"></iframe>
 </div>
 </div>
 </div>
@@ -7695,7 +7731,7 @@ Freq: MS, Length: 173, dtype: float64
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [101]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span><span class="n">future_forecast</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">iplot</span><span class="p">()</span>
@@ -7709,23 +7745,9 @@ Freq: MS, Length: 173, dtype: float64
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[101]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<iframe allowfullscreen="" frameborder="0" height="525px" src="https://plotly.com/~whuynh/79.embed" width="100%"></iframe>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=96031395-d589-44e6-8e01-5c0f78a56885">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
-</pre></div>
+<iframe allowfullscreen="" frameborder="0" height="525px" src="https://plotly.com/~whuynh/128.embed" width="100%"></iframe>
 </div>
 </div>
 </div>
